@@ -40,7 +40,7 @@ public:
 
 	// Assignment operator
 	Bag& operator=(const Bag& other) {
-		if (this == &that) return *this;
+		if (this == &other) return *this;
 		
 		// Free memory
 		Node* current = first_;
@@ -56,6 +56,8 @@ public:
 			add(current->item_);
 			current = current->next_;
 		}
+		
+		return *this;
 	}
 
 	// Methods
