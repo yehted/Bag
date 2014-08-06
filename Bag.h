@@ -7,6 +7,8 @@
 * by Robert Sedgewick and Kevin Wayne
 *
 ****************************************************************************/
+#ifndef BAG_H
+#define BAG_H
 
 #include <iterator>
 
@@ -31,7 +33,7 @@ public:
 
 	// Copy constructor
 	Bag(const Bag& other) : N_(0), first_(NULL) {
-		std::cout << "Copying" << std::endl;
+		std::cout << "Copying bag" << std::endl;
 		Node* current = other.first_;
 		while (current != NULL) {
 			add(current->item_);
@@ -41,7 +43,7 @@ public:
 
 	// Assignment operator
 	Bag& operator=(const Bag& other) {
-		std::cout << "Assigning" << std::endl;
+		std::cout << "Assigning bag" << std::endl;
 		if (this == &other) return *this;
 		
 		// Free memory
@@ -117,3 +119,4 @@ private:
 	int N_;
 	Node* first_;
 };
+#endif // !BAG_H
