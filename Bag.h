@@ -31,6 +31,7 @@ public:
 
 	// Copy constructor
 	Bag(const Bag& other) : N_(0), first_(NULL) {
+		std::cout << "Copying" << std::endl;
 		Node* current = other.first_;
 		while (current != NULL) {
 			add(current->item_);
@@ -40,6 +41,7 @@ public:
 
 	// Assignment operator
 	Bag& operator=(const Bag& other) {
+		std::cout << "Assigning" << std::endl;
 		if (this == &other) return *this;
 		
 		// Free memory

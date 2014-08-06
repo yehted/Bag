@@ -9,8 +9,8 @@ int main(int argc, char* argv[]) {
 	for (int i = 0; i < 5; i++) {
 		bag.add(foo[i]);
 	}
-	Bag<int> copy = bag;
-
+	Bag<int> copy;
+	copy = bag;
 	for (int s : copy)
 		cout << s << " ";
 	cout << endl;
