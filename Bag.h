@@ -1,5 +1,6 @@
 /***************************************************************************
 * A generic bag or multiset, implemented using a singly-linked list.
+* Behaviour is first in first out (FIFO)
 *
 * It supports insertion and iterating over the items in arbitrary order.
 *
@@ -15,7 +16,9 @@
 template <class T>
 class Bag {
 	class Node;	
+
 public:
+
 	class Iterator;
 
 	// Constructor
@@ -33,7 +36,7 @@ public:
 
 	// Copy constructor
 	Bag(const Bag& other) : N_(0), first_(NULL) {
-		std::cout << "Copying bag" << std::endl;
+//		printf("Copying bag");
 		Node* current = other.first_;
 		while (current != NULL) {
 			add(current->item_);
@@ -43,7 +46,7 @@ public:
 
 	// Assignment operator
 	Bag& operator=(const Bag& other) {
-		std::cout << "Assigning bag" << std::endl;
+//		printf("Assigning bag");
 		if (this == &other) return *this;
 		
 		// Free memory
@@ -53,6 +56,7 @@ public:
 			delete current;
 			current = first_;
 		}
+		N_ = 0;
 
 		// Copy elements
 		current = other.first_;
