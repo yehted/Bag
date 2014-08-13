@@ -19,21 +19,12 @@ public:
 
 	~Stack() {
 //		printf("Destructing stack\n");
-		Node* current = first_;
-		while (current != NULL) {
-			first_ = first_->next_;
-			delete current;
-			current = first_;
-		}
+		clear();
 	}
 
 	Stack(const Stack& other) : N_(0), first_(NULL) {
 //		printf("Copying stack\n");
-		Node* current = other.first_;
-		while (current != NULL) {
-			push(current->item_);
-			current = current->next_;
-		}
+		copy(other);
 	}
 
 	Stack& operator=(const Stack& other) {
@@ -41,20 +32,10 @@ public:
 		if (&other == this) return *this;
 
 		// Deallocate memory
-		Node* current = first_;
-		while (current != NULL) {
-			first_ = first_->next_;
-			delete current;
-			current = first_;
-		}
-		N_ = 0;
+		clear();
 
 		// Copy elements
-		current = other.first_;
-		while (current != NULL) {
-			push(current->item_);
-			current = current->next_;
-		}
+		copy(other);
 
 		return *this;
 	}
@@ -80,6 +61,24 @@ public:
 		return first_->item_;
 	}
 
+	void clear() {
+		Node* current = first_;
+		while (current != NULL) {
+			first_ = first_->next_;
+			delete current;
+			current = first_;
+			N_--;
+		}
+	}
+
+	void copy(const Stack& other) {
+		Node* current = other.first_;
+		while (current != NULL) {
+			push(current->item_);
+			current = current->next_;
+		}
+	}
+	
 	int size() { return N_; }
 
 	bool isEmpty() { return N_ == 0; }

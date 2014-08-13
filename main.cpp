@@ -18,17 +18,19 @@ int main(int argc, char* argv[]) {
 	
 	// Bag
 	cout << "Bag" << endl;
-	Bag<int> b_copy;
-	b_copy = bag;
+	Bag<int> b_copy = bag;
+	//b_copy = bag;
 	for (int s : b_copy)
 		cout << s << " ";
 	cout << endl;
 	cout << b_copy.size() << endl;
+	bag.clear();
+	cout << bag.size() << endl;
 
 	// Queue
 	cout << "Queue" << endl;
-	Queue<int> q_copy;
-	q_copy = queue;
+	Queue<int> q_copy = queue;
+	//q_copy = queue;
 	
 	int N = queue.size();
 	for (int i = 0; i < N; i++)

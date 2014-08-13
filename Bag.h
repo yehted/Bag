@@ -27,22 +27,14 @@ public:
 
 	// Destructor
 	~Bag() {
-		Node* current = first_;
-		while (current != NULL) {
-			first_ = first_->next_;
-			delete current;
-			current = first_;
-		}
+//		printf("Destructing bag\n");
+		clear();
 	}
 
 	// Copy constructor
 	Bag(const Bag& other) : N_(0), first_(NULL) {
 //		printf("Copying bag");
-		Node* current = other.first_;
-		while (current != NULL) {
-			add(current->item_);
-			current = current->next_;
-		}
+		copy(other);
 	}
 
 	// Assignment operator
@@ -51,20 +43,10 @@ public:
 		if (this == &other) return *this;
 		
 		// Free memory
-		Node* current = first_;
-		while (first_ != NULL) {
-			first_ = first_->next_;
-			delete current;
-			current = first_;
-		}
-		N_ = 0;
+		clear();
 
 		// Copy elements
-		current = other.first_;
-		while (current != NULL) {
-			add(current->item_);
-			current = current->next_;
-		}
+		copy(other);
 		
 		return *this;
 	}
@@ -79,6 +61,24 @@ public:
 		first_ = new Node(item);
 		first_->next_ = oldfirst;
 		N_++;
+	}
+
+	void clear() {
+		Node* current = first_;
+		while (current != NULL) {
+			first_ = first_->next_;
+			delete current;
+			current = first_;
+			N_--;
+		}
+	}
+
+	void copy(const Bag& other) {
+		Node* current = other.first_;
+		while (current != NULL) {
+			add(current->item_);
+			current = current->next_;
+		}
 	}
 
 	Iterator begin() { return Iterator(first_); }

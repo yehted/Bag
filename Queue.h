@@ -23,22 +23,12 @@ public:
 
 	~Queue() {
 //		printf("Destructing queue\n");
-		Node* current = first_;
-		while (current != NULL) {
-			first_ = first_->next_;
-			delete current;
-			current = first_;
-		}
-		last_ = NULL;
+		clear();
 	}
 
 	Queue(const Queue& other) : N_(0), first_(NULL), last_(NULL) {
 //		printf("Copying queue\n");
-		Node* current = first_;
-		while (current != NULL) {
-			enqueue(current->item_);
-			current = current->next_;
-		}
+		copy(other);
 	}
 
 	Queue& operator=(const Queue& other) {
@@ -46,21 +36,10 @@ public:
 		if (&other == this) return *this;
 
 		// Deallocate
-		Node* current = first_;
-		while (current != NULL) {
-			first_ = first_->next_;
-			delete current;
-			current = first_;
-		}
-		last_ = NULL;
-		N_ = 0;
+		clear();
 
 		// Copy
-		current = other.first_;
-		while (current != NULL) {
-			enqueue(current->item_);
-			current = current->next_;
-		}
+		copy(other);
 
 		return *this;
 	}
@@ -85,6 +64,25 @@ public:
 
 	T peek() {
 		return first_->item_;
+	}
+
+	void clear() {
+		Node* current = first_;
+		while (current != NULL) {
+			first_ = first_->next_;
+			delete current;
+			current = first_;
+			N_--;
+		}
+		last_ = NULL;
+	}
+
+	void copy(const Queue& other) {
+		Node* current = other.first_;
+		while (current != NULL) {
+			enqueue(current->item_);
+			current = current->next_;
+		}
 	}
 
 	int size() { return N_; }
