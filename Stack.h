@@ -1,82 +1,75 @@
-/****************************************************
-* A generic queue container, implementing first in
-* first out (FIFO) behavior, using a singly linked
-* list. Supports iterating, enqueue, and dequeue
-* methods.
+/***************************************************
+* A generic stack container, implementing last in
+* first out (LIFO) behaviour using a singly-linked
+* list. Supports iterating, push, and pop methods.
 *
-*****************************************************/
-#ifndef QUEUE_H
-#define QUEUE_H
-
-#include <stdexcept>
+****************************************************/
 #include <iterator>
+#include <stdexcept>
 
-template <class T>
-class Queue {
+template<class T>
+class Stack {
 	class Node;
 
 public:
-	
+
 	class Iterator;
 
-	Queue() : N_(0), first_(NULL), last_(NULL) {}
+	Stack() : N_(0), first_(NULL) {}
 
-	~Queue() {
-//		printf("Destructing queue\n");
+	~Stack() {
+//		printf("Destructing stack\n");
 		Node* current = first_;
 		while (current != NULL) {
 			first_ = first_->next_;
 			delete current;
 			current = first_;
 		}
-		last_ = NULL;
 	}
 
-	Queue(const Queue& other) : N_(0), first_(NULL), last_(NULL) {
-//		printf("Copying queue\n");
-		Node* current = first_;
+	Stack(const Stack& other) : N_(0), first_(NULL) {
+//		printf("Copying stack\n");
+		Node* current = other.first_;
 		while (current != NULL) {
-			enqueue(current->item_);
+			push(current->item_);
 			current = current->next_;
 		}
 	}
 
-	Queue& operator=(const Queue& other) {
-//		printf("Assigning queue\n");
+	Stack& operator=(const Stack& other) {
+//		printf("Assigning stack\n");
 		if (&other == this) return *this;
 
-		// Deallocate
+		// Deallocate memory
 		Node* current = first_;
 		while (current != NULL) {
 			first_ = first_->next_;
 			delete current;
 			current = first_;
 		}
-		last_ = NULL;
 		N_ = 0;
 
-		// Copy
+		// Copy elements
 		current = other.first_;
 		while (current != NULL) {
-			enqueue(current->item_);
+			push(current->item_);
 			current = current->next_;
 		}
 
 		return *this;
 	}
-
-	void enqueue(T item) {
-		Node* oldlast = last_;
-		last_ = new Node(item);		
-		if (oldlast == NULL) first_ = last_;
-		else oldlast->next_ = last_;
+	
+	void push(T item) {
+		Node* oldfirst = first_;
+		first_ = new Node(item);
+		first_->next_ = oldfirst;
 		N_++;
 	}
 
-	T dequeue() {
-		if (isEmpty()) throw std::out_of_range("Queue is empty");
+	T pop() {
+		if (isEmpty()) throw std::out_of_range("Stack is empty");
+		T item = first_->item_;
 		Node* oldfirst = first_;
-		T item = oldfirst->item_;
 		first_ = first_->next_;
 		delete oldfirst;
 		N_--;
@@ -89,7 +82,7 @@ public:
 
 	int size() { return N_; }
 
-	bool isEmpty() { return first_ == NULL; }
+	bool isEmpty() { return N_ == 0; }
 
 	Iterator begin() { return Iterator(first_); }
 
@@ -121,8 +114,6 @@ private:
 		Node* next_;
 	};
 
-	int N_;				// number of items in queue
-	Node* last_;		// pointer to back of queue
-	Node* first_;		// pointer to front of queue
+	int N_;				// number of elements in stack
+	Node* first_;		// pointer to top of stack
 };
-#endif // !QUEUE_H

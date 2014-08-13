@@ -1,6 +1,7 @@
 /***************************************************************************
 * A generic bag or multiset, implemented using a singly-linked list.
-* Behaviour is first in first out (FIFO)
+* Iterator does not reverse the items, and the container does not support 
+* removal of items from the bag.
 *
 * It supports insertion and iterating over the items in arbitrary order.
 *
@@ -88,23 +89,14 @@ public:
 	class Iterator : public std::iterator < std::forward_iterator_tag, T > {
 	public:
 		Iterator() : ptr_(NULL) {}
-
 		Iterator(Node* ptr) : ptr_(ptr) {}
-
 		~Iterator() {}
-
 		Iterator(const Iterator& other) : ptr_(other.ptr_) {}
-
 		Iterator& operator=(const Iterator& other) { ptr_ = other.ptr_; return *this; }
-
 		Iterator& operator++() { ptr_ = ptr_->next_; return *this; }
-
 		bool operator==(const Iterator& other) { return ptr_ == other.ptr_; }
-
 		bool operator!=(const Iterator& other) { return ptr_ != other.ptr_; }
-
 		T& operator*() { return ptr_->item_; }
-
 		T* operator->() { Iterator tmp = *this; T& value = *tmp; return &value; }
 
 	private:

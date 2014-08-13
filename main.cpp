@@ -1,5 +1,6 @@
 #include "Bag.h"
 #include "Queue.h"
+#include "Stack.h"
 #include <iostream>
 #include "vld.h"
 
@@ -8,9 +9,11 @@ int main(int argc, char* argv[]) {
 	int foo[5] = { 1, 3, 5, 6, 8 };
 	Bag<int> bag;
 	Queue<int> queue;
+	Stack<int> stack;
 	for (int i = 0; i < 5; i++) {
 		bag.add(foo[i]);
 		queue.enqueue(foo[i]);
+		stack.push(foo[i]);
 	}
 	
 	// Bag
@@ -37,6 +40,24 @@ int main(int argc, char* argv[]) {
 		cout << s << " ";
 	cout << endl;
 	cout << q_copy.size() << endl;
+
+	// Stack
+	cout << "Stack" << endl;
+	Stack<int> cstack;
+	cstack = stack;
+
+	int M = stack.size();
+	for (int i = 0; i < M; i++)
+		cout << stack.pop() << " ";
+	cout << endl;
+	cout << stack.size() << endl;
+
+	stack.push(22);
+
+	for (int s : stack)
+		cout << s << " ";
+	cout << endl;
+	cout << stack.size() << endl;
 
 	return 0;
 }
