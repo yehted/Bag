@@ -56,7 +56,7 @@ public:
 
 	int size() { return N_; }
 
-	void add(T item) {
+	void add(const T& item) {
 		Node* oldfirst = first_;
 		first_ = new Node(item);
 		first_->next_ = oldfirst;
@@ -106,7 +106,7 @@ public:
 private:
 	struct Node {
 		Node() : next_(NULL) {}
-		Node(T item) : item_(item) {}
+		Node(const T& item) : item_(item) {}
 
 		T item_;
 		Node* next_;

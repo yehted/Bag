@@ -44,7 +44,7 @@ public:
 		return *this;
 	}
 
-	void enqueue(T item) {
+	void enqueue(const T& item) {
 		Node* oldlast = last_;
 		last_ = new Node(item);		
 		if (oldlast == NULL) first_ = last_;
@@ -58,6 +58,7 @@ public:
 		T item = oldfirst->item_;
 		first_ = first_->next_;
 		delete oldfirst;
+		if (isEmpty()) last_ = NULL;	// to avoid loitering
 		N_--;
 		return item;
 	}
@@ -113,7 +114,7 @@ public:
 private:
 	struct Node {
 		Node() : next_(NULL) {}
-		Node(T item) : item_(item), next_(NULL) {}
+		Node(const T& item) : item_(item), next_(NULL) {}
 
 		T item_;
 		Node* next_;
