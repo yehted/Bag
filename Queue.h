@@ -63,7 +63,7 @@ public:
 		return item;
 	}
 
-	T peek() {
+	T& peek() {
 		return first_->item_;
 	}
 
